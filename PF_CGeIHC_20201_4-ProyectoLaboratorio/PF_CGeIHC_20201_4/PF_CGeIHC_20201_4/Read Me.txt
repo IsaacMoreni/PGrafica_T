@@ -1,0 +1,5 @@
+Origional skybox texture made by HipShot
+Converted for Valve games by [-B-]
+
+to install, copy the 6 files into your skybox folder located here:
+C:\Program Files\Steam\steamapps\NAME\counter-strike source\cstrike\materials\skybox
