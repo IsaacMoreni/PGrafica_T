@@ -652,7 +652,7 @@ void animate(void)
 		}	
 	}
 
-	else if (nyancat) {
+	if (nyancat) {
 		if (framenyan < 19) {
 			Sleep(20);
 			framenyan++;
@@ -661,11 +661,6 @@ void animate(void)
 		{
 			framenyan = 0;
 		}
-	}
-	else
-	{
-
-		SoundEngine->stopAllSounds();
 	}
 
 
@@ -1998,6 +1993,7 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 	}
 	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS && calavera) {
 		calavera = false;
+		SoundEngine->stopAllSounds();
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS && !nyancat) {
@@ -2006,7 +2002,8 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 		SoundEngine->play2D("Musica/Nyancat.mp3", GL_TRUE);
 	}
 	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS && nyancat) {
-		nyancat = true;
+		nyancat = false;
+		SoundEngine->stopAllSounds();
 	}
 	
 	
