@@ -67,7 +67,7 @@ float	movX = 0.0f,
 		rotX = 0.0f;
 
 //Texture
-unsigned int	t_calavera[16],
+unsigned int	t_nyan[20],
 				t_skeleton[146],
 				t_opening[1644],
 				t_papelPicado,
@@ -84,7 +84,8 @@ unsigned int	t_calavera[16],
 
 bool calavera = false;
 bool huesos = true;
-int frameClavera = 0;
+bool nyancat = false;
+int framenyan = 0;
 int frameSkeleton = 0;
 float posiciones[4] = {-33.0f, -35.25f, -69.25f, -0.5f};
 
@@ -256,22 +257,26 @@ void LoadTextures()
 	t_vidrPlas = generateTextures("Texturas/vidrioplastico.jpg", 0);
 	t_papelPicado = generateTextures("Texturas/ppDiaDeMuertos.png", 1);
 
-	t_calavera[0] = generateTextures("Texturas/calavera/calavera-0.jpg", 0);
-	t_calavera[1] = generateTextures("Texturas/calavera/calavera-1.jpg", 0);
-	t_calavera[2] = generateTextures("Texturas/calavera/calavera-2.jpg", 0);
-	t_calavera[3] = generateTextures("Texturas/calavera/calavera-3.jpg", 0);
-	t_calavera[4] = generateTextures("Texturas/calavera/calavera-4.jpg", 0);
-	t_calavera[5] = generateTextures("Texturas/calavera/calavera-5.jpg", 0);
-	t_calavera[6] = generateTextures("Texturas/calavera/calavera-6.jpg", 0);
-	t_calavera[7] = generateTextures("Texturas/calavera/calavera-7.jpg", 0);
-	t_calavera[8] = generateTextures("Texturas/calavera/calavera-8.jpg", 0);
-	t_calavera[9] = generateTextures("Texturas/calavera/calavera-9.jpg", 0);
-	t_calavera[10] = generateTextures("Texturas/calavera/calavera-10.jpg", 0);
-	t_calavera[11] = generateTextures("Texturas/calavera/calavera-11.jpg", 0);
-	t_calavera[12] = generateTextures("Texturas/calavera/calavera-12.jpg", 0);
-	t_calavera[13] = generateTextures("Texturas/calavera/calavera-13.jpg", 0);
-	t_calavera[14] = generateTextures("Texturas/calavera/calavera-14.jpg", 0);
-	t_calavera[15] = generateTextures("Texturas/calavera/calavera-15.jpg", 0);
+	t_nyan[0] = generateTextures("TexturasJojo/nyancat/nyan00106.png", 0);
+	t_nyan[1] = generateTextures("TexturasJojo/nyancat/nyan00111.png", 0);
+	t_nyan[2] = generateTextures("TexturasJojo/nyancat/nyan00116.png", 0);
+	t_nyan[3] = generateTextures("TexturasJojo/nyancat/nyan00121.png", 0);
+	t_nyan[4] = generateTextures("TexturasJojo/nyancat/nyan00126.png", 0);
+	t_nyan[5] = generateTextures("TexturasJojo/nyancat/nyan00131.png", 0);
+	t_nyan[6] = generateTextures("TexturasJojo/nyancat/nyan00136.png", 0);
+	t_nyan[7] = generateTextures("TexturasJojo/nyancat/nyan00141.png", 0);
+	t_nyan[8] = generateTextures("TexturasJojo/nyancat/nyan00146.png", 0);
+	t_nyan[9] = generateTextures("TexturasJojo/nyancat/nyan00151.png", 0);
+	t_nyan[10] = generateTextures("TexturasJojo/nyancat/nyan00156.png", 0);
+	t_nyan[11] = generateTextures("TexturasJojo/nyancat/nyan00161.png", 0);
+	t_nyan[12] = generateTextures("TexturasJojo/nyancat/nyan00166.png", 0);
+	t_nyan[13] = generateTextures("TexturasJojo/nyancat/nyan00171.png", 0);
+	t_nyan[14] = generateTextures("TexturasJojo/nyancat/nyan00176.png", 0);
+	t_nyan[15] = generateTextures("TexturasJojo/nyancat/nyan00181.png", 0);
+	t_nyan[16] = generateTextures("TexturasJojo/nyancat/nyan00186.png", 0);
+	t_nyan[17] = generateTextures("TexturasJojo/nyancat/nyan00191.png", 0);
+	t_nyan[18] = generateTextures("TexturasJojo/nyancat/nyan00196.png", 0);
+	t_nyan[19] = generateTextures("TexturasJojo/nyancat/nyan00201.png", 0);
 	/*
 	//Skeletons
 	t_skeleton[0] = generateTextures("Texturas/skeleton/skeleton0.jpg", 0);
@@ -636,14 +641,7 @@ void animate(void)
 
 
 	if (calavera) {
-		if (frameClavera < 14) {
-			Sleep(10);
-			frameClavera++;
-		}
-		else
-		{
-			frameClavera = 0;
-		}
+
 		if (frameSkeleton < 1644) {
 			Sleep(0);
 			frameSkeleton++;
@@ -651,8 +649,18 @@ void animate(void)
 		else 
 		{
 			frameSkeleton = 0;
+		}	
+	}
+
+	else if (nyancat) {
+		if (framenyan < 19) {
+			Sleep(20);
+			framenyan++;
 		}
-		
+		else
+		{
+			framenyan = 0;
+		}
 	}
 	else
 	{
@@ -1428,13 +1436,13 @@ void display(Shader shader, Model mesa, Model monitor, Model pc, Model keyboard,
 
 	// Gif
 
-	if (huesos) {
+	if (nyancat) {
 		model = glm::translate(glm::mat4(1.0f), glm::vec3(posiciones[0], 15.0f, -30.0f));
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 15.5f, 0.1f));
 		shader.setMat4("model", model);
-		glBindTexture(GL_TEXTURE_2D, t_calavera[frameClavera]);
+		glBindTexture(GL_TEXTURE_2D, t_nyan[framenyan]);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 		/*
 		model = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, 17.0f, posiciones[2]));
@@ -1985,13 +1993,20 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS && !calavera) {
-		huesos = true;
 		calavera = true;
 		SoundEngine->play2D("Musica/jojo.mp3", GL_TRUE);
 	}
 	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS && calavera) {
-		huesos = false;
 		calavera = false;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS && !nyancat) {
+		nyancat = true;
+
+		SoundEngine->play2D("Musica/Nyancat.mp3", GL_TRUE);
+	}
+	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS && nyancat) {
+		nyancat = true;
 	}
 	
 	
