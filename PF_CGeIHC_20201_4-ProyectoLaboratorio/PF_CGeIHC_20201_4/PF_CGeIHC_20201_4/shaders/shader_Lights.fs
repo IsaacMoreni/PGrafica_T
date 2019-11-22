@@ -84,7 +84,7 @@ void main()
     }
 
     // Spot light
-    //result += CalcSpotLight( spotLight, norm, FragPos, viewDir );
+    result += CalcSpotLight( spotLight, norm, FragPos, viewDir );
     
     vec4   texColor= vec4( result,texture( material_diffuse, TexCoords).a );
     if(texColor.a < 0.1)
