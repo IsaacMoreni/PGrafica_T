@@ -50,6 +50,7 @@ double	deltaTime = 0.0f,
 //Lighting
 glm::vec3 lightPosition(100.0f, 1.0f, -100.0f);
 glm::vec3 lightDirection(-1.0f, -1.0f, -1.0f);
+glm::vec3 lightDirection2(-1.0f, -2.0f, -11.0f);
 
 
 void myData(void);
@@ -271,7 +272,7 @@ void LoadTextures()
 	t_calavera[13] = generateTextures("Texturas/calavera/calavera-13.jpg", 0);
 	t_calavera[14] = generateTextures("Texturas/calavera/calavera-14.jpg", 0);
 	t_calavera[15] = generateTextures("Texturas/calavera/calavera-15.jpg", 0);
-
+	/*
 	//Skeletons
 	t_skeleton[0] = generateTextures("Texturas/skeleton/skeleton0.jpg", 0);
 	t_skeleton[1] = generateTextures("Texturas/skeleton/skeleton1.jpg", 0);
@@ -423,7 +424,7 @@ void LoadTextures()
 	t_skeleton[143] = generateTextures("Texturas/spkskel/spkskel49.jpg", 0);
 	t_skeleton[144] = generateTextures("Texturas/spkskel/spkskel50.jpg", 0);
 	t_skeleton[145] = generateTextures("Texturas/spkskel/spkskel51.jpg", 0); 
-
+	*/
 	int p = 0;
 	int cond = 0;
 	string ruta = "TexturasJojo/jojoOP/scene00001.png";
@@ -434,6 +435,7 @@ void LoadTextures()
 	//ruta.copy(rutac, ruta.length() + 1);
 	//rutac[ruta.copy(rutac, sizeof(rutac) - 1)] = '\0';
 	//printf("\n%s\n", rutac);
+	/*
 	int indice = 0;
 	for (int l = 0; l < 2; l++)
 	{
@@ -482,7 +484,7 @@ void LoadTextures()
 	//{
 	//	t_opening[i] = generateTextures("Texturas/spkskel/spkskel51.jpg", 0);
 	//}
-	
+	*/
 
 }
 
@@ -709,12 +711,14 @@ void animate(void)
 }
 
 void display(Shader shader, Model mesa, Model monitor, Model pc, Model keyboard, Model mouse, Model board, 
-	         Model projector, Model fire, Model ghost, Model pumpkin, Model jotaro)
+	         Model projector, Model fire, Model ghost, Model pumpkin, Model jotaro, Model garrafon)
 {
 	shader.use();
 
 
 	shader.setVec3("viewPos", camera.Position);
+
+	
 	shader.setVec3("dirLight.direction", lightDirection);
 	shader.setVec3("dirLight.ambient", glm::vec3(0.0f, 0.0f, 0.0f));
 	shader.setVec3("dirLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -722,7 +726,7 @@ void display(Shader shader, Model mesa, Model monitor, Model pc, Model keyboard,
 
 	//shader.setVec3("pointLight.position", lightPosition);
 	shader.setVec3("pointLight[0].position", glm::vec3(0, 10, -35));
-	shader.setVec3("pointLight[0].ambient", glm::vec3(1.0f, 1.0f, 1.0f));
+	shader.setVec3("pointLight[0].ambient", glm::vec3(0.0f, 0.0f, 0.0f));
 	shader.setVec3("pointLight[0].diffuse", glm::vec3(0.0f, 0.0f, 1.0f));
 	shader.setVec3("pointLight[0].specular", glm::vec3(0.0f, 0.0f, 1.0f));
 	shader.setFloat("pointLight[0].constant", 1.0f);
@@ -752,7 +756,18 @@ void display(Shader shader, Model mesa, Model monitor, Model pc, Model keyboard,
 	shader.setFloat("pointLight[3].constant", 1.0f);
 	shader.setFloat("pointLight[3].linear", 0.009f);
 	shader.setFloat("pointLight[3].quadratic", 0.032f);
-
+	
+	//shader.setVec3("spotLight.position", glm::vec3(-1.45f, 25.0f, -30.0f));
+	shader.setVec3("spotLight.position", glm::vec3(-1.450f, 23.0f, -40.0f));
+	shader.setVec3("spotLight.direction", lightDirection2);
+	shader.setFloat("spotLight.cutOff", cos(glm::radians(13.0f)));
+	shader.setFloat("spotLight.outerCutOff", cos(glm::radians(30.0f)));
+	shader.setVec3("spotLight.ambient", glm::vec3(0.0f, 0.0f, 0.0f));
+	shader.setVec3("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+	shader.setVec3("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+	shader.setFloat("spotLight.constant", 1.0f);
+	shader.setFloat("spotLight.linear", 0.0009f);
+	shader.setFloat("spotLight.quadratic", 0.0032f);
 
 	shader.setFloat("material_shininess", 32.0f);
 
@@ -1421,13 +1436,14 @@ void display(Shader shader, Model mesa, Model monitor, Model pc, Model keyboard,
 		shader.setMat4("model", model);
 		glBindTexture(GL_TEXTURE_2D, t_calavera[frameClavera]);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
+		/*
 		model = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, 17.0f, posiciones[2]));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::scale(model, glm::vec3(18.0f, 13.0f, 0.1f));
 		shader.setMat4("model", model);
 		glBindTexture(GL_TEXTURE_2D, t_opening[frameSkeleton]);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	    */
 	}
 
 	//Elemntos del salon
@@ -1697,6 +1713,21 @@ void display(Shader shader, Model mesa, Model monitor, Model pc, Model keyboard,
 	shader.setMat4("model", model);
 	jotaro.Draw(shader);
 
+	//proyector
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-5, 23, -35));
+	model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	//model = glm::scale(model, glm::vec3(giroMonito, giroMonito, giroMonito));
+	shader.setMat4("model", model);
+	projector.Draw(shader);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(5, 0, -46));
+	model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	//model = glm::scale(model, glm::vec3(giroMonito, giroMonito, giroMonito));
+	shader.setMat4("model", model);
+	garrafon.Draw(shader);
 	
 
 
@@ -1773,10 +1804,11 @@ int main()
 	Model mouse = ((char *)"Models/mouse/mouse.obj");
 	Model board = ((char *)"Models/board/board.obj");
 	Model ghost = ((char *)"Models/ghost/ghost.obj");
-	Model projector = ((char *)"Models/projector/OptomaProjector.obj");
+	Model projector = ((char *)"Models/projector/proyector.obj");
 	Model fire = ((char *)"Models/fire/fire.obj");
 	Model pumpkim = ((char *)"Models/pumpkin/diohead2.obj");
 	Model jotaro = ((char *)"Models/jotaro/jotaro2.obj");
+	Model garrafon = ((char *)"Models/garrafon/garrafon.obj");
 	
 
 
@@ -1899,7 +1931,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//display(modelShader, ourModel, llantasModel);
-		display(modelShader, mesa, monitors, pc, keyboard, mouse, board, projector, fire, ghost, pumpkim, jotaro);
+		display(modelShader, mesa, monitors, pc, keyboard, mouse, 
+		board, projector, fire, ghost, pumpkim, jotaro, garrafon);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -1954,7 +1987,7 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS && !calavera) {
 		huesos = true;
 		calavera = true;
-		SoundEngine->play2D("Musica/spooky_scary_skeleton.mp3", GL_TRUE);
+		SoundEngine->play2D("Musica/jojo.mp3", GL_TRUE);
 	}
 	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS && calavera) {
 		huesos = false;
